@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISO 9001 Değerlendirme Kriterleri — İndir</title>
+<style>
+  :root { --ink:#1d2430; --muted:#5b6575; --line:#e3e6eb; --accent:#1f5fae; --bg:#f6f7f9; }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink:#e8ebf0; --muted:#a3acba; --line:#2c3340; --accent:#6ea8f0; --bg:#14181f; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--bg); }
+  main { max-width:640px; margin:0 auto; padding:48px 20px; }
+  h1 { font-size:1.5rem; line-height:1.3; margin:0 0 8px; }
+  .sub { color:var(--muted); margin:0 0 28px; }
+  .card { border:1px solid var(--line); border-radius:12px; padding:20px; margin-bottom:24px; }
+  .file { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+  .icon { width:44px; height:44px; border-radius:8px; background:#1d6f42; color:#fff; display:grid; place-items:center; font-weight:700; font-size:.8rem; flex:none; }
+  .name { font-weight:600; word-break:break-word; }
+  .meta { color:var(--muted); font-size:.9rem; }
+  button { font:inherit; font-weight:600; color:#fff; background:var(--accent); border:0; border-radius:8px; padding:12px 20px; cursor:pointer; width:100%; }
+  button:disabled { opacity:.55; cursor:default; }
+  #status { margin:12px 0 0; font-size:.92rem; color:var(--muted); min-height:1.4em; }
+  h2 { font-size:1.05rem; margin:0 0 10px; }
+  ul { margin:0; padding-left:20px; }
+  li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>ISO 9001 Olgunluk Değerlendirmesi — Gereklilik Bazlı Kriterler</h1>
+  <p class="sub">70 ISO 9001 gerekliliği için denetçiyi yönlendiren Y1–Y5 değerlendirme kriterleri.</p>
+
+  <div class="card">
+    <div class="file">
+      <div class="icon">XLSX</div>
+      <div>
+        <div class="name">Gereklilik_Bazli_Degerlendirme_Kriterleri.xlsx</div>
+        <div class="meta">Excel çalışma kitabı · 70 gereklilik</div>
+      </div>
+    </div>
+    <button id="dl" type="button">Dosyayı indir</button>
+    <p id="status" role="status"></p>
+  </div>
+
+  <div class="card">
+    <h2>Dosyada neler var</h2>
+    <ul>
+      <li><b>E sütunu:</b> ISO 9001 gerekliliğinin (kural metninin) kendisi.</li>
+      <li><b>J–N sütunları:</b> Her gereklilik için Y1 (Temel/tepkisel) ile Y5 (En iyi uygulama) arası seviye kriterleri.</li>
+      <li><b>Seviyeler birikimlidir:</b> Bir seviye verilebilmesi için altındaki bütün seviyelerin koşulları sağlanmış olmalıdır. Tereddütte alt seviye verilir.</li>
+      <li><b>“Örneklemede” ifadesi:</b> Denetçinin seçtiği kayıtların tamamında koşulun görülmesi gerekir.</li>
+      <li>Bayrak, süreç sahibi ve kapsam sütunları (F–I) doldurulmak üzere boş bırakılmıştır.</li>
+    </ul>
+  </div>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+<script>
+function buildXlsx(d) {
+  if (typeof ExcelJS === 'undefined') throw new Error('lib');
+  var wb = new ExcelJS.Workbook();
+  var ws = wb.addWorksheet('Degerlendirme_Kriterleri', { views: [{ state: 'frozen', xSplit: 5, ySplit: 5 }] });
+  var navy = 'FF10233F', thin = { style: 'thin', color: { argb: 'FFBFC5CF' } };
+  var border = { top: thin, left: thin, bottom: thin, right: thin };
+  var widths = [8, 8, 12, 32, 70, 13, 22, 11, 17, 38, 38, 38, 38, 38];
+  widths.forEach(function (w, i) { ws.getColumn(i + 1).width = w; });
+  ws.mergeCells('A1:E1');
+  ws.getCell('A1').value = d.title;
+  ws.getCell('A1').font = { name: 'Calibri', size: 14, bold: true, color: { argb: navy } };
+  ws.mergeCells('A2:N2');
+  ws.getCell('A2').value = d.note;
+  ws.getCell('A2').alignment = { wrapText: true, vertical: 'top' };
+  ws.getCell('A2').font = { name: 'Calibri', size: 9, italic: true };
+  ws.getRow(2).height = 48;
+  var h = ws.getRow(5);
+  d.header.forEach(function (v, i) {
+    var c = h.getCell(i + 1);
+    c.value = v;
+    c.font = { name: 'Calibri', size: 9, bold: true, color: { argb: 'FFFFFFFF' } };
+    c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: navy } };
+    c.alignment = { wrapText: true, vertical: 'middle', horizontal: 'center' };
+    c.border = border;
+  });
+  h.height = 32;
+  d.rows.forEach(function (row, ri) {
+    var r = ws.getRow(6 + ri);
+    row.forEach(function (v, i) {
+      var c = r.getCell(i + 1);
+      c.value = v;
+      c.font = { name: 'Calibri', size: 9, bold: i < 4, color: { argb: navy } };
+      c.alignment = { wrapText: true, vertical: 'top' };
+      c.border = border;
+    });
+    r.height = Math.max(120, Math.min(400, Math.floor(String(row[4] || '').length / 70) * 15 + 30));
+  });
+  ws.autoFilter = { from: 'A5', to: { row: 5 + d.rows.length, column: 14 } };
+  return wb.xlsx.writeBuffer().then(function (buf) {
+    return new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  });
+}
+(function () {
+  var btn = document.getElementById('dl');
+  var status = document.getElementById('status');
+  var FILE = 'Gereklilik_Bazli_Degerlendirme_Kriterleri.xlsx';
+  var downloads = null;
+  btn.disabled = true;
+  status.textContent = 'Hazırlanıyor…';
+
+  function ready(ns) {
+    downloads = ns;
+    if (!ns) {
+      status.textContent = 'İndirme bu görünümde kullanılamıyor. Sayfayı claude.ai üzerinde açmayı deneyin.';
+      return;
+    }
+    btn.disabled = false;
+    status.textContent = '';
+  }
+
+  try {
+    if (window.claude && typeof window.claude.use === 'function') {
+      window.claude.use('downloads').then(ready, function () { ready(null); });
+    } else {
+      setTimeout(function () {
+        if (window.claude && typeof window.claude.use === 'function') {
+          window.claude.use('downloads').then(ready, function () { ready(null); });
+        } else { ready(null); }
+      }, 1500);
+    }
+  } catch (e) { ready(null); }
+
+  btn.addEventListener('click', function () {
+    if (!downloads) return;
+    btn.disabled = true;
+    status.textContent = 'Dosya alınıyor…';
+    fetch('data.json')
+      .then(function (r) { if (!r.ok) throw new Error('fetch'); return r.json(); })
+      .then(buildXlsx)
+      .then(function (blob) {
+        status.textContent = 'Onay penceresini kontrol edin…';
+        return downloads.save({ filename: FILE, data: blob });
+      })
+      .then(function () { status.textContent = 'İndirme başlatıldı.'; })
+      .catch(function (err) {
+        var code = err && err.code;
+        if (code === 'declined') status.textContent = 'İndirme iptal edildi. Tekrar denemek için butona basın.';
+        else if (code === 'rate_limited') status.textContent = 'Açık bir onay penceresi var; birazdan tekrar deneyin.';
+        else status.textContent = 'Dosya indirilemedi. Sayfayı yenileyip tekrar deneyin.';
+      })
+      .then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
