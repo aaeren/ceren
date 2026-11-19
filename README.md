@@ -6,11 +6,11 @@ Yönetim sistemi olgunluk modeli (Yaklaşım × Uygulama, S = MİN(Y;U)) ve ISO 
 
 | Dosya | İçerik |
 |---|---|
-| `Olgunluk_Modeli_v2.1_Gereklilik_Bazli.xlsx` | **Güncel model (v2.1).** 70 ISO 9001 gerekliliği; her biri için Y1–Y5 rubriği, bayrak ve süreç sahibi. Bütün sekmeler (Başla, Değerlendirme, Sonuç, Referans) ve formüller çalışır durumda. |
-| `Olgunluk_Modeli_v2_Sadelestirilmis (new).xlsx` | Önceki model (v2.0, 61 soru). |
+| `Olgunluk_Modeli_v2_Sadelestirilmis (new).xlsx` | **Güncel model (v2.1).** 70 ISO 9001 gerekliliği (E kolonu) ve her biri için Y1–Y5 değerlendirme kriterleri (J–N kolonları), bayrak ve süreç sahibi. Bütün sekmeler (Başla, Değerlendirme, Sonuç, Referans) ve formüller çalışır durumda. |
 | `Book1.xlsx` | Kaynak gereklilik listesi (kural kodu, başlık, metin). |
-| `Gereklilik_Bazli_Degerlendirme_Kriterleri.xlsx` | Yalnızca kriterlerin bulunduğu tek sayfalık çalışma dosyası. |
-| `indirme_sayfasi/` | Kriter dosyasının indirme sayfası (HTML + veri). |
+| `indirme_sayfasi/` | Kriterlerin indirme sayfası (HTML + veri). |
+
+Önceki 61 soruluk sürüm (v2.0) git geçmişinde durur.
 
 ## Değerlendirici için kurallar
 
